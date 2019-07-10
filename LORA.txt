@@ -1,0 +1,78 @@
+注意：由于引脚的复用，需要在setup增添这句代码
+  afio_cfg_debug_ports(AFIO_DEBUG_SW_ONLY);
+注意所有的（串口助手）波特率调整为9600
+
+第一步、将LORA的各个引脚设置为输出模式
+    pinMode(LORA_PWR, OUTPUT);
+    pinMode(RESETN,OUTPUT );
+    pinMode(AT_CMD, OUTPUT);
+    pinMode(LORA_RX,OUTPUT);
+    pinMode(LORA_TX,OUTPUT);
+
+第二步、开启LORA的电源
+    digitalWrite(LORA_PWR,HIGH);
+    
+第三步、防止进行LORA复位，去掉注释即为让LORA复位
+    digitalWrite(RESETN ,HIGH);
+//    delay(150);
+//    digitalWrite(RESETN,LOW);
+    
+第四步、AT给高电平进入AT模式配置
+    digitalWrite(AT_CMD, HIGH);
+第五步、进行LORA的配置
+主机LORA不开地址，设备LORA开地址
+设备LORA设置SIP为01（不带包序带地址）
+主机的配置参数：
+收←◆NET:	Node to Node
+TFREQ:	434.0MHz
+RFREQ:	430.0MHz
+POW:	20dBm
+BW:	125kHz
+TSF:	12
+RSF:	12
+CR:	4/5
+MODE:	LORA
+SYNC:	0x12
+PREM:	8,8
+CRC:	ON
+TIQ:	OFF
+RIQ:	OFF
+SEQ:	OFF
+IP:	OFF
+AES:	OFF
+ACK:	OFF
+LDR:	AUTO
+PAR:	None
+LCP:	0
+LFT:	0
+
+设备的配置参数：
+收←◆NET:	Node to Node
+TFREQ:	430.0MHz
+RFREQ:	434.0MHz
+POW:	20dBm
+BW:	125kHz
+TSF:	12
+RSF:	12
+CR:	4/5
+MODE:	LORA
+SYNC:	0x12
+PREM:	8,8
+CRC:	ON
+TIQ:	OFF
+RIQ:	OFF
+SEQ:	OFF
+IP:	ON
+AES:	OFF
+ACK:	OFF
+LDR:	AUTO
+PAR:	None
+LCP:	0
+LFT:	0
+
+
++ADDR:142E3D0C
++MADDR:71000000
+
++ADDR:14052A0C
++MADDR:71000000
